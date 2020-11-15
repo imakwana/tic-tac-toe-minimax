@@ -390,77 +390,7 @@ class board_class():
             print('\n' + str_line)
 
     
-class state(board_class):
-    def main(self):
-        """
-        Main function that calls all functions
-        """
-        # Paul Lu.  Set the seed to get deterministic behaviour for each run.
-        #       Makes it easier for testing and tracing for understanding.
-        randomseed(274 + 2020)
-
-        self.clean()
-        self.h_choice = ''  # X or O
-        self.c_choice = ''  # X or O
-        self.first = ''  # if human is the first
-
-        # Human chooses X or O to play
-        while self.h_choice != 'O' and self.h_choice != 'X':
-            try:
-                print('')
-                self.h_choice = input('Choose X or O\nChosen: ').upper()
-            except (EOFError, KeyboardInterrupt):
-                print('Bye')
-                exit()
-            except (KeyError, ValueError):
-                print('Bad choice')
-
-        # Setting computer's choice
-        if self.h_choice == 'X':
-            self.c_choice = 'O'
-        else:
-            self.c_choice = 'X'
-
-        # Human may starts first
-        self.clean()
-        while self.first != 'Y' and self.first != 'N':
-            try:
-                self.first = input('First to start?[y/n]: ').upper()
-            except (EOFError, KeyboardInterrupt):
-                print('Bye')
-                exit()
-            except (KeyError, ValueError):
-                print('Bad choice')
-
-        # Main loop of this game
-        while len(self.empty_cells(self.board)) > 0 and not self.game_over(self.board):
-            if self.first == 'N':
-                self.ai_turn(self.c_choice, self.h_choice)
-                self.first = ''
-
-            self.human_turn(self.c_choice, self.h_choice)
-            self.ai_turn(self.c_choice, self.h_choice)
-
-        # Game over message
-        if self.wins(self.board, self.HUMAN):
-            self.clean()
-            print(f'Human turn [{self.h_choice}]')
-            self.render(self.board, self.c_choice, self.h_choice)
-            print('YOU WIN!')
-        elif self.wins(self.board, self.COMP):
-            self.clean()
-            print(f'Computer turn [{self.c_choice}]')
-            self.render(self.board, self.c_choice, self.h_choice)
-            print('YOU LOSE!')
-        else:
-            self.clean()
-            self.render(self.board, self.c_choice, self.h_choice)
-            print('DRAW!')
-
-        exit()
-
-        pass
-    
+class state(board_class):  
     def game_over(self,state):
         """
         This function test if the human or computer wins
@@ -629,77 +559,76 @@ class state(board_class):
             score = 0
 
         return score
-def main(self):
-        """
-        Main function that calls all functions
-        """
-        # Paul Lu.  Set the seed to get deterministic behaviour for each run.
-        #       Makes it easier for testing and tracing for understanding.
-        randomseed(274 + 2020)
-        game = state()
-        game.__init_subclass__()
-        game._init_()
-        game.clean()
-        h_choice = ''  # X or O
-        c_choice = ''  # X or O
-        first = ''  # if human is the first
+def main():
+    """
+    Main function that calls all functions
+    """
+    # Paul Lu.  Set the seed to get deterministic behaviour for each run.
+    #       Makes it easier for testing and tracing for understanding.
+    randomseed(274 + 2020)
+    game = state()
+    game._init_()
+    game.clean()
+    h_choice = ''  # X or O
+    c_choice = ''  # X or O
+    first = ''  # if human is the first
 
-        # Human chooses X or O to play
-        while h_choice != 'O' and h_choice != 'X':
-            try:
-                print('')
-                h_choice = input('Choose X or O\nChosen: ').upper()
-            except (EOFError, KeyboardInterrupt):
-                print('Bye')
-                exit()
-            except (KeyError, ValueError):
-                print('Bad choice')
+    # Human chooses X or O to play
+    while h_choice != 'O' and h_choice != 'X':
+        try:
+            print('')
+            h_choice = input('Choose X or O\nChosen: ').upper()
+        except (EOFError, KeyboardInterrupt):
+            print('Bye')
+            exit()
+        except (KeyError, ValueError):
+            print('Bad choice')
 
-        # Setting computer's choice
-        if h_choice == 'X':
-            c_choice = 'O'
-        else:
-            c_choice = 'X'
+    # Setting computer's choice
+    if h_choice == 'X':
+        c_choice = 'O'
+    else:
+        c_choice = 'X'
 
-        # Human may starts first
-        game.clean()
-        while first != 'Y' and first != 'N':
-            try:
-                first = input('First to start?[y/n]: ').upper()
-            except (EOFError, KeyboardInterrupt):
-                print('Bye')
-                exit()
-            except (KeyError, ValueError):
-                print('Bad choice')
+    # Human may starts first
+    game.clean()
+    while first != 'Y' and first != 'N':
+        try:
+            first = input('First to start?[y/n]: ').upper()
+        except (EOFError, KeyboardInterrupt):
+            print('Bye')
+            exit()
+        except (KeyError, ValueError):
+            print('Bad choice')
 
-        # Main loop of this game
-        while len(game.empty_cells(game.board) > 0 and not game.game_over(game.board):
-            if first == 'N':
-                game.ai_turn(c_choice, h_choice)
-                first = ''
-
-            game.human_turn(c_choice, h_choice)
+    # Main loop of this game
+    while len(game.empty_cells(game.board)) > 0 and not game.game_over(game.board):
+        if first == 'N':
             game.ai_turn(c_choice, h_choice)
+            first = ''
 
-        # Game over message
-        if game.wins(game.board, game.HUMAN):
-            game.clean()
-            print(f'Human turn [{h_choice}]')
-            game.render(game.board, c_choice, h_choice)
-            print('YOU WIN!')
-        elif game.wins(game.board, game.COMP):
-            game.clean()
-            print(f'Computer turn [{c_choice}]')
-            game.render(game.board, c_choice, h_choice)
-            print('YOU LOSE!')
-        else:
-            game.clean()
-            game.render(game.board, c_choice, h_choice)
-            print('DRAW!')
+        game.human_turn(c_choice, h_choice)
+        game.ai_turn(c_choice, h_choice)
 
-        exit()
+    # Game over message
+    if game.wins(game.board, game.HUMAN):
+        game.clean()
+        print(f'Human turn [{h_choice}]')
+        game.render(game.board, c_choice, h_choice)
+        print('YOU WIN!')
+    elif game.wins(game.board, game.COMP):
+        game.clean()
+        print(f'Computer turn [{c_choice}]')
+        game.render(game.board, c_choice, h_choice)
+        print('YOU LOSE!')
+    else:
+        game.clean()
+        game.render(game.board, c_choice, h_choice)
+        print('DRAW!')
 
-        pass
+    exit()
+
+    pass
 if __name__ == '__main__':
     main()
     pass
