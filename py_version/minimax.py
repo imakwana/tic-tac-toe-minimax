@@ -629,9 +629,77 @@ class state(board_class):
             score = 0
 
         return score
+def main(self):
+        """
+        Main function that calls all functions
+        """
+        # Paul Lu.  Set the seed to get deterministic behaviour for each run.
+        #       Makes it easier for testing and tracing for understanding.
+        randomseed(274 + 2020)
+        game = state()
+        game.__init_subclass__()
+        game._init_()
+        game.clean()
+        h_choice = ''  # X or O
+        c_choice = ''  # X or O
+        first = ''  # if human is the first
+
+        # Human chooses X or O to play
+        while h_choice != 'O' and h_choice != 'X':
+            try:
+                print('')
+                h_choice = input('Choose X or O\nChosen: ').upper()
+            except (EOFError, KeyboardInterrupt):
+                print('Bye')
+                exit()
+            except (KeyError, ValueError):
+                print('Bad choice')
+
+        # Setting computer's choice
+        if h_choice == 'X':
+            c_choice = 'O'
+        else:
+            c_choice = 'X'
+
+        # Human may starts first
+        game.clean()
+        while first != 'Y' and first != 'N':
+            try:
+                first = input('First to start?[y/n]: ').upper()
+            except (EOFError, KeyboardInterrupt):
+                print('Bye')
+                exit()
+            except (KeyError, ValueError):
+                print('Bad choice')
+
+        # Main loop of this game
+        while len(game.empty_cells(game.board) > 0 and not game.game_over(game.board):
+            if first == 'N':
+                game.ai_turn(c_choice, h_choice)
+                first = ''
+
+            game.human_turn(c_choice, h_choice)
+            game.ai_turn(c_choice, h_choice)
+
+        # Game over message
+        if game.wins(game.board, game.HUMAN):
+            game.clean()
+            print(f'Human turn [{h_choice}]')
+            game.render(game.board, c_choice, h_choice)
+            print('YOU WIN!')
+        elif game.wins(game.board, game.COMP):
+            game.clean()
+            print(f'Computer turn [{c_choice}]')
+            game.render(game.board, c_choice, h_choice)
+            print('YOU LOSE!')
+        else:
+            game.clean()
+            game.render(game.board, c_choice, h_choice)
+            print('DRAW!')
+
+        exit()
+
+        pass
 if __name__ == '__main__':
-    game = state()
-    game.__init_subclass__()
-    game._init_()
-    game.main()
+    main()
     pass
