@@ -342,6 +342,12 @@ class board_class():
             7: [2, 0], 8: [2, 1], 9: [2, 2],
         }
     pass
+    def _str_(self):
+
+        return
+    def _repr_(self):
+
+        return
     def clean(self):
         """
         Clears the console
